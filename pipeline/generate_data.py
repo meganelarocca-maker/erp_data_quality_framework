@@ -149,3 +149,8 @@ def generate_corrections_metier(df_articles, n=30) :
 df_corrections_metier=generate_corrections_metier(df_articles)
 print(df_corrections_metier.head())
 df_corrections_metier.to_excel("data/raw/corrections_metier_articles.xlsx", index=False)
+
+#je vais maintenant introduire des anomalies volontairement correspondant à celles  recensées dans les études sur les données d'entreprises
+def generate_anomalies_articles(df_articles):
+    df=df_articles.copy()
+    df.loc[df.sample(frac=0.1).index, "famille"] = np.nan
