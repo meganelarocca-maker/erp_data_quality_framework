@@ -1,6 +1,7 @@
 from faker import Faker
 import pandas as pd
 import numpy as np
+from openpyxl import * 
 
 # J'initialise Faker en français
 fake = Faker("fr_FR")
@@ -31,6 +32,8 @@ depots = [
     "DEP_NORD",
     "DEP_OUEST"
 ]
+
+priorites_fournisseur=["Basse", "Moyenne", "Haute"]
 
 def generate_articles(n=100):
     # Je crée une liste vide qui va accueillir mes articles
@@ -120,6 +123,29 @@ df_commandes=generate_commandes(df_articles)
 print(df_commandes.head())
 df_commandes.to_csv("data/raw/commandes.csv", index=False)
 
+#Maintenant, je génère c'est la source qui simule les corrections manuelles des équipes métier.
 
+def generate_corrections_metier(df_articles, n=30) :
+        corrections_metier= []
+        for i in range(n):
+            priorite = np.random.choice(priorites_fournisseur)
+            if priorite == "Haute":
+                seuil = np.random.choice([120, 150])
+            elif priorite == "Moyenne":
+                seuil = np.random.choice([80, 100])
+            else:
+                seuil = np.random.choice([50, 80])
+            correction_metier ={
+                "code_article": np.random.choice(df_articles["code_article"]),
+                "famille_excel": np.random.choice(familles),
+                "priorite_fournisseur": priorite,
+                "seuil_alerte": seuil
+            }
 
+            corrections_metier.append(correction_metier)
 
+        return pd.DataFrame(corrections_metier)
+
+df_corrections_metier=generate_corrections_metier(df_articles)
+print(df_corrections_metier.head())
+df_corrections_metier.to_excel("data/raw/corrections_metier_articles.xlsx", index=False)
