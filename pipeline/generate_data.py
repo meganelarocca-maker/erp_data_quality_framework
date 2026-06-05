@@ -21,6 +21,16 @@ libelles = [
     "Poteau carré 25x25",
     "Gaine technique 3m"
 ]
+depots = [
+    "DEP_AVIGNON",      # siège social
+    "DEP_VERNOUILLET",  # Île-de-France
+    "DEP_GRIGNY",       # plateforme logistique IDF
+    "DEP_LIMAY",        # logistique régionale
+    "DEP_GRAULHET",     # usine Sud
+    "DEP_CIEL",         # usine Bourgogne
+    "DEP_NORD",
+    "DEP_OUEST"
+]
 
 def generate_articles(n=100):
     # Je crée une liste vide qui va accueillir mes articles
@@ -68,6 +78,25 @@ df_fournisseurs=generate_fournisseurs()
 print(df_fournisseurs.head())
 df_articles.to_csv("data/raw/fournisseurs.csv", index=False)
 
+#Maintenant je créé la table transactionnelle qui sera jointe à la table article grâce à la clé commune "code_article"
+
+def generate_stocks(df_articles, n=800): #je passe df_article en argument pour que la fonction aille chercher les codes articles pré-existants
+    stocks= []
+    for i in range(n):
+        stock= {
+        "code_article": np.random.choice(df_articles["code_article"]),
+        "depot":  np.random.choice(depots),
+        "quantite_stock": np.random.randint(0,800),
+        "date_maj": fake.date_between(start_date="-2y", end_date="today")
+            }
+
+        stocks.append(stock)
+
+    return pd.DataFrame(stocks)
+
+df_stocks=generate_stocks(df_articles)
+print(df_stocks.head())
+df_stocks.to_csv("data/raw/stocks.csv", index=False)
 
 
 
