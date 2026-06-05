@@ -48,3 +48,32 @@ df_articles = generate_articles()
 print(df_articles.head())
 
 df_articles.to_csv("data/raw/articles.csv", index=False)
+
+#je réalise les mêmes étapes pour la table de référence fournisseurs
+def generate_fournisseurs(n=50):
+    fournisseurs= []
+    for i in range(n):
+        fournisseur= {
+        "id_fournisseur": f"FOUR{str(i+1) . zfill(3)}",
+        "nom_fournisseur":  fake.company(),
+         "pays": fake.country(),
+        "statut": np.random.choice(statuts)
+            }
+
+        fournisseurs.append(fournisseur)
+
+    return pd.DataFrame(fournisseurs)
+
+df_fournisseurs=generate_fournisseurs()
+print(df_fournisseurs.head())
+df_articles.to_csv("data/raw/fournisseurs.csv", index=False)
+
+
+
+
+
+
+
+
+
+
