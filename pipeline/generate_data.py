@@ -78,7 +78,7 @@ df_fournisseurs=generate_fournisseurs()
 print(df_fournisseurs.head())
 df_articles.to_csv("data/raw/fournisseurs.csv", index=False)
 
-#Maintenant je créé la table transactionnelle qui sera jointe à la table article grâce à la clé commune "code_article"
+#Maintenant je créé la table transactionnelle "stocks" qui sera jointe à la table article grâce à la clé commune "code_article"
 
 def generate_stocks(df_articles, n=800): #je passe df_article en argument pour que la fonction aille chercher les codes articles pré-existants
     stocks= []
@@ -99,9 +99,26 @@ print(df_stocks.head())
 df_stocks.to_csv("data/raw/stocks.csv", index=False)
 
 
+#Pour finir, je créé la table transactionnelle "commandes" qui sera elle aussi jointe à la table article grâce à la clé commune "code_article"
 
+def generate_commandes(df_articles, n=800): #je passe df_article en argument pour que la fonction aille chercher les codes articles pré-existants
+    commandes= []
+    for i in range(n):
+        commande= {
+        "numero_commande": f"COM{str(i+1).zfill(3)}",
+        "code_article": np.random.choice(df_articles["code_article"]),
+        "quantite_commande": np.random.randint(10,500),
+        "prix_vente": round(np.random.uniform(10, 500), 2),
+        "date_commande": fake.date_between(start_date="-2y", end_date="today")
+        }
 
+        commandes.append(commande)
 
+    return pd.DataFrame(commandes)
+
+df_commandes=generate_commandes(df_articles)
+print(df_commandes.head())
+df_commandes.to_csv("data/raw/commandes.csv", index=False)
 
 
 
