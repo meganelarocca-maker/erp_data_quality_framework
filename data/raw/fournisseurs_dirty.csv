@@ -1,0 +1,54 @@
+id_fournisseur,nom_fournisseur,pays,statut
+FOUR001,Descamps,Soudan,actif
+FOUR002,Lesage Pineau SA,Féroé (Îles),ACTIF
+FOUR003,Guyon,Marshall (Îles),INACTIF
+FOUR004,Joseph Vasseur et Fils,pérou,INACTIF
+FOUR005,Garnier SA,Yougoslavie,ACTIF
+FOUR006,Carpentier,Bahrain,ACTIF
+FOUR999,Julien,Bahamas,INACTIF
+FOUR008,Techer SARL,Argentine,ACTIF
+FOUR009,Poulain,Danemark,INACTIF
+FOUR010,Fouquet,Cuba,INACTIF
+FOUR011,Marie,Brunei,actif
+FOUR012,Mary Barthelemy et Fils,Albanie,actif
+FOUR013,Barbier,Canada,INACTIF
+FOUR014,Lévêque et Fils,Pays-Bas,ACTIF
+FOUR015,Chauvin S.A.R.L.,Territoire britannique de l'océan Indien,INACTIF
+FOUR016,Leblanc Arnaud S.A.S.,Territoire britannique de l'océan Indien,INACTIF
+FOUR017,Couturier,Albanie,actif
+FOUR018,Bourgeois,Réunion (La),INACTIF
+FOUR019,,Turquie,actif
+FOUR020,Guillet,Israël,ACTIF
+FOUR021,Maurice,Gabon,ACTIF
+FOUR022,Munoz Gilbert SA,Irak,ACTIF
+FOUR023,Gros Cousin et Fils,Ouzbékistan,INACTIF
+FOUR024,Cohen,Namibie,actif
+FOUR999,Bousquet S.A.,Grenade,INACTIF
+FOUR026,Maréchal,Liban,ACTIF
+FOUR027,Gaillard et Fils,Italie,ACTIF
+FOUR028,Rousseau SARL,Uruguay,INACTIF
+FOUR029,Fleury Dupuy SARL,Malte,ACTIF
+FOUR030,Couturier SA,Géorgie du Sud et Sandwich du Sud (Îles),ACTIF
+FOUR031,Germain,Oman,INACTIF
+FOUR032,,brunei,INACTIF
+FOUR033,Rodriguez S.A.,Côte d'Ivoire,INACTIF
+FOUR034,Maillot,Jordanie,INACTIF
+FOUR035,Duval,Pakistan,actif
+FOUR036,Gomes,Bouvet (Îles),ACTIF
+FOUR037,Grenier Rousset S.A.,Tchad,ACTIF
+FOUR038,Delahaye,Tunisie,INACTIF
+FOUR039,Denis,Niger,ACTIF
+FOUR040,Philippe,Espagne,ACTIF
+FOUR041,Garnier,Géorgie du Sud et Sandwich du Sud (Îles),INACTIF
+FOUR042,Bouvet,Jamaïque,ACTIF
+FOUR043,Julien,Zaïre,INACTIF
+FOUR044,Launay,Liban,ACTIF
+FOUR045,Barbier SA,Japon,INACTIF
+FOUR046,Valentin,Mozambique,ACTIF
+FOUR047,Laine SA,gibraltar,actif
+FOUR048,Daniel,antilles néerlandaises,INACTIF
+FOUR049,,qatar,ACTIF
+FOUR050,Raynaud,Qatar,INACTIF
+FOUR048,Daniel,Antilles néerlandaises,INACTIF
+FOUR050,,Qatar,INACTIF
+FOUR042,Bouvet,Jamaïque,ACTIF

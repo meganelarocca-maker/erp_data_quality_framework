@@ -151,6 +151,74 @@ print(df_corrections_metier.head())
 df_corrections_metier.to_excel("data/raw/corrections_metier_articles.xlsx", index=False)
 
 #je vais maintenant introduire des anomalies volontairement correspondant à celles  recensées dans les études sur les données d'entreprises
+
 def generate_anomalies_articles(df_articles):
-    df=df_articles.copy()
-    df.loc[df.sample(frac=0.1).index, "famille"] = np.nan
+    df_articles_dirty=df_articles.copy()
+    idx = df_articles_dirty.sample(frac=0.08).index #je créée une variable index me permettant d'avoir des prix incohérents différents et non uniforme 
+    df_articles_dirty.loc[df_articles_dirty.sample(frac=0.08).index, "famille"] = np.nan
+    df_articles_dirty.loc[df_articles_dirty.sample(frac=0.08).index, "prix_standard"] = -np.random.uniform(10, 500, size=len(idx)) #size me permet de créer une valeur différente par ligne
+    df_articles_dirty.loc[df_articles_dirty.sample(frac=0.05).index, "prix_standard"] = 0
+    df_articles_dirty.loc[df_articles_dirty.sample(frac=0.07).index, "unite"] = np.random.choice(["kilo", "kg"])
+    df_articles_dirty.loc[df_articles_dirty.sample(frac=0.15).index, "statut"] = np.random.choice(["inactif", "actif"])
+    df_articles_dirty.loc[df_articles_dirty.sample(frac=0.04).index, "fournisseur_principal"] = "FOUR999"
+
+    return df_articles_dirty
+df_articles_dirty=generate_anomalies_articles(df_articles)
+print(df_articles_dirty.sample(10))
+df_articles_dirty.to_csv("data/raw/articles_dirty.csv", index=False)
+
+def generate_anomalies_fournisseurs(df_fournisseurs):
+    df_fournisseurs_dirty=df_fournisseurs.copy()
+    doublons = df_fournisseurs_dirty.sample(3)  # je prends 3 lignes au hasard
+    df_fournisseurs_dirty = pd.concat([df_fournisseurs_dirty, doublons], ignore_index=True)
+    df_fournisseurs_dirty.loc[df_fournisseurs_dirty.sample(frac=0.04).index, "id_fournisseur"] ="FOUR999"
+    df_fournisseurs_dirty.loc[df_fournisseurs_dirty.sample(frac=0.08).index, "nom_fournisseur"] = np.nan
+    idx = df_fournisseurs_dirty.sample(frac=0.10).index
+    df_fournisseurs_dirty.loc[idx, "pays"] = df_fournisseurs_dirty.loc[idx, "pays"].str.lower() # Je simule une erreur de casse fréquente : pays saisi en minuscules sans majuscule initiale
+    df_fournisseurs_dirty.loc[df_fournisseurs_dirty.sample(frac=0.15).index, "statut"] = np.random.choice(["inactif", "actif"])
+  
+    return df_fournisseurs_dirty
+
+df_fournisseurs_dirty=generate_anomalies_fournisseurs(df_fournisseurs)
+print(df_fournisseurs_dirty.sample(10))
+df_fournisseurs_dirty.to_csv("data/raw/fournisseurs_dirty.csv", index=False)
+
+def generate_anomalies_stocks(df_stocks):
+    df_stocks_dirty=df_stocks.copy()
+    df_stocks_dirty.loc[df_stocks_dirty.sample(frac=0.03).index, "code_article"] = "ART999"
+    idx = df_stocks_dirty.sample(frac=0.05).index
+    df_stocks_dirty.loc[idx, "quantite_stock"] = -np.random.randint(0, 800, size=len(idx))
+    idx = df_stocks_dirty.sample(frac=0.01).index
+    df_stocks_dirty.loc[idx, "depot"] = df_stocks_dirty.loc[idx, "depot"].str.lower()
+    idx = df_stocks_dirty.sample(frac=0.04).index
+    df_stocks_dirty.loc[idx, "date_maj"] = pd.Timestamp("2019-01-01")
+            
+    return df_stocks_dirty
+
+df_stocks_dirty=generate_anomalies_stocks(df_stocks)
+print(df_stocks_dirty[df_stocks_dirty["quantite_stock"] < 0])
+print(df_stocks_dirty[df_stocks_dirty["code_article"] == "ART999"])
+print(df_stocks_dirty.sample(10))
+df_stocks_dirty.to_csv("data/raw/stocks_dirty.csv", index=False)
+
+def generate_anomalies_commandes(df_commandes):
+    df_commandes_dirty = df_commandes.copy()
+    df_commandes_dirty.loc[df_commandes_dirty.sample(frac=0.05).index, "prix_vente"] = np.nan
+    idx = df_commandes_dirty.sample(frac=0.03).index
+    df_commandes_dirty.loc[idx, "prix_vente"] = -np.round(np.random.uniform(10, 500, size=len(idx)), 2)
+    df_commandes_dirty.loc[df_commandes_dirty.sample(frac=0.03).index, "prix_vente"] = 0
+    idx = df_commandes_dirty.sample(frac=0.03).index
+    df_commandes_dirty.loc[idx, "date_commande"] = pd.Timestamp("2027-01-01")
+    idx = df_commandes_dirty.sample(frac=0.03).index
+    df_commandes_dirty.loc[idx, "date_commande"] = pd.Timestamp("2021-06-15") 
+
+    return df_commandes_dirty   
+
+
+df_commandes_dirty=generate_anomalies_commandes(df_commandes)
+
+#je filtre directement sur les erreurs pour gagner du temps et vérfier mes résultats 
+print(df_commandes_dirty[df_commandes_dirty["prix_vente"] < 0])
+print(df_commandes_dirty[df_commandes_dirty["prix_vente"].isna()])
+print(df_commandes_dirty[pd.to_datetime(df_commandes_dirty["date_commande"]) > pd.Timestamp("2026-06-08")])
+df_commandes_dirty.to_csv("data/raw/commandes_dirty.csv", index=False)
