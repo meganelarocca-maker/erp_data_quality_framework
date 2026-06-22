@@ -1,0 +1,14 @@
+services:
+  postgres:
+    image: postgres:15
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_DB: erp_data_quality
+      POSTGRES_USER: megane
+      POSTGRES_PASSWORD: erp251125
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
